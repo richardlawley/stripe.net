@@ -37,15 +37,10 @@ namespace Stripe
 					Customer = ((JToken)value).ToObject<StripeCustomer>();
 					CustomerId = Customer.Id;
 				}
-				else if (value == null)
+				else if (value is string)
 				{
-					CustomerId = null;
 					Customer = null;
-				}
-				else
-				{
-					CustomerId = value.ToString();
-					Customer = null;
+					CustomerId = (string)value;
 				}
 			}
 		}
@@ -65,8 +60,24 @@ namespace Stripe
 		[JsonProperty("card")]
 		public StripeCard StripeCard { get; set; }
 
-		[JsonProperty("invoice")]
-		public string InvoiceId { get; set; }
+		public string InvoiceId { get; private set; }
+		public StripeInvoice Invoice { get; private set; }
+		private object InvoiceJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					Invoice = ((JToken)value).ToObject<StripeInvoice>();
+					InvoiceId = Invoice.Id;
+				}
+				else if (value is string)
+				{
+					Invoice = null;
+					InvoiceId = (string)value;
+				}
+			}
+		}
 
 		[JsonProperty("failure_message")]
 		public string FailureMessage { get; private set; }

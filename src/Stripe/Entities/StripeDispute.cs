@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Stripe.Infrastructure;
 
 namespace Stripe
@@ -12,8 +13,25 @@ namespace Stripe
 		[JsonProperty("amount")]
 		public int? AmountInCents { get; set; }
 
+		public string ChargeId { get; private set; }
+		public StripeCharge Charge { get; private set; }
 		[JsonProperty("charge")]
-		public string ChargeId { get; set; }
+		private object ChargeJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					Charge = ((JToken)value).ToObject<StripeCharge>();
+					ChargeId = Charge.Id;
+				}
+				else if (value is string)
+				{
+					Charge = null;
+					ChargeId = (string)value;
+				}
+			}
+		}
 
 		[JsonProperty("created")]
 		[JsonConverter(typeof(StripeDateTimeConverter))]

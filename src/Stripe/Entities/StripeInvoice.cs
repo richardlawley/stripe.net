@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Stripe.Infrastructure;
 
 namespace Stripe
@@ -18,14 +19,46 @@ namespace Stripe
 		[JsonProperty("attempted")]
 		public bool? Attempted { get; set; }
 
+		public string ChargeId { get; private set; }
+		public StripeCharge Charge { get; private set; }
 		[JsonProperty("charge")]
-		public string ChargeId { get; set; }
+		private object ChargeJson {
+			set {
+				if (value is JObject)
+				{
+					Charge = ((JToken)value).ToObject<StripeCharge>();
+					ChargeId = Charge.Id;
+				}
+				else if (value is string)
+				{
+					Charge = null;
+					ChargeId = (string)value;
+				}
+			}
+		}
 
 		[JsonProperty("closed")]
 		public bool? Closed { get; set; }
 
+		public string CustomerId { get; private set; }
+		public StripeCustomer Customer { get; private set; }
 		[JsonProperty("customer")]
-		public string CustomerId { get; set; }
+		public object CustomerJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					Customer = ((JToken)value).ToObject<StripeCustomer>();
+					CustomerId = Customer.Id;
+				}
+				else if (value is string)
+				{
+					Customer = null;
+					CustomerId = (string)value;
+				}
+			}
+		}
 
 		[JsonProperty("currency")]
 		public string Currency { get; set; }

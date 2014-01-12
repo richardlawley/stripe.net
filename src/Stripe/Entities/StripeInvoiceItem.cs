@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Stripe.Infrastructure;
 
 namespace Stripe
@@ -23,9 +24,25 @@ namespace Stripe
 		[JsonProperty("currency")]
 		public string Currency { get; set; }
 
+		public string CustomerId { get; private set; }
+		public StripeCustomer Customer { get; private set; }
 		[JsonProperty("customer")]
-		public string CustomerId { get; set; }
-
+		public object CustomerJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					Customer = ((JToken)value).ToObject<StripeCustomer>();
+					CustomerId = Customer.Id;
+				}
+				else if (value is string)
+				{
+					Customer = null;
+					CustomerId = (string)value;
+				}
+			}
+		}
 		[JsonProperty("description")]
 		public string Description { get; set; }
 
@@ -37,6 +54,26 @@ namespace Stripe
 
 		[JsonProperty("period")]
 		public StripePeriod Period { get; set; }
+
+		public string InvoiceId { get; private set; }
+		public StripeInvoice Invoice { get; private set; }
+		[JsonProperty("invoice")]
+		private object InvoiceJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					Invoice = ((JToken)value).ToObject<StripeInvoice>();
+					InvoiceId = Invoice.Id;
+				}
+				else if (value is string)
+				{
+					Invoice = null;
+					InvoiceId = (string)value;
+				}
+			}
+		}
 
 		[JsonProperty("metadata")]
 		public Dictionary<string, string> Metadata { get; set; }

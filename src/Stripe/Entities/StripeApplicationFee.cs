@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Stripe.Infrastructure;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Stripe
 {
@@ -13,8 +14,25 @@ namespace Stripe
 		[JsonProperty("livemode")]
 		public bool? LiveMode { get; set; }
 
+		public string AccountId { get; private set; }
+		public StripeAccount Account { get; private set; }
 		[JsonProperty("account")]
-		public string AccountId { get; set; }
+		private object AccountJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					Account = ((JToken)value).ToObject<StripeAccount>();
+					AccountId = Account.Id;
+				}
+				else if (value is string)
+				{
+					Account = null;
+					AccountId = (string)value;
+				}
+			}
+		}
 
 		[JsonProperty("amount")]
 		public int AmountInCents { get; set; }
@@ -25,9 +43,25 @@ namespace Stripe
 		[JsonProperty("balance_transaction")]
 		public string BalanceTransaction { get; set; }
 
+		public string ChargeId { get; private set; }
+		public StripeCharge Charge { get; private set; }
 		[JsonProperty("charge")]
-		public string ChargeId { get; set; }
-
+		private object ChargeJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					Charge = ((JToken)value).ToObject<StripeCharge>();
+					ChargeId = Charge.Id;
+				}
+				else if (value is string)
+				{
+					Charge = null;
+					ChargeId = (string)value;
+				}
+			}
+		}
 		[JsonProperty("created")]
 		[JsonConverter(typeof(StripeDateTimeConverter))]
 		public DateTime Created { get; set; }
