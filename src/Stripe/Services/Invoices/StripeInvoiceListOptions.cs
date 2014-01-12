@@ -9,5 +9,8 @@ namespace Stripe
 
 		[JsonProperty("date")]
 		public StripeDateFilter Date { get; set; }
+
+		public bool ExpandCustomer { get; set; }
+		public bool ExpandCharge { get; set; }
 	}
 }

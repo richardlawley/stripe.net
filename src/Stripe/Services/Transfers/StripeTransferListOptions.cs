@@ -16,5 +16,7 @@ namespace Stripe
 
 		[JsonProperty("status")]
 		public string Status { get; set; }
+
+		public bool ExpandBalance_Transaction { get; set; }
 	}
 }

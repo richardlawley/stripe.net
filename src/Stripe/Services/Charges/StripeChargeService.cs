@@ -20,9 +20,13 @@ namespace Stripe
 			return Mapper<StripeCharge>.MapFromJson(response);
 		}
 
-		public virtual StripeCharge Get(string chargeId)
+		public virtual StripeCharge Get(string chargeId, StripeChargeGetOptions options = null)
 		{
 			var url = string.Format("{0}/{1}", Urls.Charges, chargeId);
+			if (options != null)
+			{
+				url = ParameterBuilder.ApplyAllParameters(options, url);
+			}
 
 			var response = Requestor.GetString(url, ApiKey);
 

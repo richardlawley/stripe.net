@@ -33,7 +33,7 @@ namespace Stripe.Tests.charges
 			Thread.Sleep(1000);		// Need a delay in order to request dates from the server
 			_createdCharges.Add( _stripeChargeService.Create(test_data.stripe_charge_create_options.ValidCard()));
 
-			_equalsFilter = new StripeDateFilter { EqualTo = _createdCharges[0].Created };
+			_equalsFilter = new StripeDateFilter { EqualTo = _createdCharges[1].Created };
 			_greaterThanFilter = new StripeDateFilter { GreaterThan = _createdCharges[0].Created };
 			_lessThanAndGreaterThanFilter = new StripeDateFilter
 			{
@@ -54,7 +54,7 @@ namespace Stripe.Tests.charges
 		It should_only_have_single_element_for_equals = () =>
 			_chargeListEquals.Count.ShouldEqual(1);
 		It should_only_contain_first_charge_for_equals = () =>
-			_chargeListEquals.Single().Id.ShouldEqual(_createdCharges[0].Id);
+			_chargeListEquals.Single().Id.ShouldEqual(_createdCharges[1].Id);
 
 		// Greater than...
 		It should_contain_two_elements_for_gt = () =>

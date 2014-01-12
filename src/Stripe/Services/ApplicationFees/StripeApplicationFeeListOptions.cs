@@ -13,5 +13,8 @@ namespace Stripe
 
 		[JsonProperty("created")]
 		public StripeDateFilter Created { get; set; }
+
+		public bool ExpandAccount { get; set; }
+		public bool ExpandBalanceTransaction { get; set; }
 	}
 }

@@ -20,9 +20,13 @@ namespace Stripe
 			return Mapper<StripeTransfer>.MapFromJson(response);
 		}
 
-		public virtual StripeTransfer Get(string transferId)
+		public virtual StripeTransfer Get(string transferId, StripeTransferGetOptions options = null)
 		{
 			var url = string.Format("{0}/{1}", Urls.Transfers, transferId);
+			if (options != null)
+			{
+				url = ParameterBuilder.ApplyAllParameters(options, url);
+			}
 
 			var response = Requestor.GetString(url, ApiKey);
 

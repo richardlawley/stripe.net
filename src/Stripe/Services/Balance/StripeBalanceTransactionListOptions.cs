@@ -19,5 +19,11 @@ namespace Stripe
 
 		[JsonProperty("type")]
 		public string Type { get; set; }
+
+		[JsonProperty("created")]
+		public StripeDateFilter Created { get; set; }
+
+		[JsonProperty("available_on")]
+		public StripeDateFilter AvailableOn { get; set; }
 	}
 }

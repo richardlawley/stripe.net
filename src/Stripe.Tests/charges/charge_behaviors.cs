@@ -69,5 +69,18 @@ namespace Stripe.Tests
 
 		It should_have_the_correct_card_country = () =>
 			StripeCharge.StripeCard.Country.ShouldEqual("US");
+
+		It should_have_the_balance_transaction_id = () =>
+			StripeCharge.BalanceTransactionId.ShouldNotBeEmpty();
+
+		It should_not_have_expanded_balance_transaction = () =>
+			StripeCharge.BalanceTransaction.ShouldBeNull();
+
+		It should_not_have_expanded_invoice = () =>
+			StripeCharge.Invoice.ShouldBeNull();
+
+		It should_not_have_expanded_customer = () =>
+			StripeCharge.Customer.ShouldBeNull();
+
 	}
 }

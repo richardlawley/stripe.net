@@ -11,9 +11,13 @@ namespace Stripe
 			ApiKey = apiKey;
 		}
 
-		public virtual StripeInvoice Get(string invoiceId)
+		public virtual StripeInvoice Get(string invoiceId, StripeInvoiceGetOptions options = null)
 		{
 			var url = string.Format("{0}/{1}", Urls.Invoices, invoiceId);
+			if (options != null)
+			{
+				url = ParameterBuilder.ApplyAllParameters(options, url);
+			}
 
 			var response = Requestor.GetString(url, ApiKey);
 

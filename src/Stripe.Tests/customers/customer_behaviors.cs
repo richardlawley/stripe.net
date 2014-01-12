@@ -101,5 +101,8 @@ namespace Stripe.Tests
 
 		It should_have_the_correct_account_balance = () =>
 			StripeCustomer.AccountBalance.ShouldEqual(100);
+
+		It should_not_have_default_card_expanded = () =>
+			StripeCustomer.StripeDefaultCard.ShouldBeNull();
 	}
 }

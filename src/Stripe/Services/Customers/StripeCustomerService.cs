@@ -20,9 +20,13 @@ namespace Stripe
 			return Mapper<StripeCustomer>.MapFromJson(response);
 		}
 
-		public virtual StripeCustomer Get(string customerId)
+		public virtual StripeCustomer Get(string customerId, StripeCustomerGetOptions options = null)
 		{
 			var url = string.Format("{0}/{1}", Urls.Customers, customerId);
+			if (options != null)
+			{
+				url = ParameterBuilder.ApplyAllParameters(options, url);
+			}
 
 			var response = Requestor.GetString(url, ApiKey);
 

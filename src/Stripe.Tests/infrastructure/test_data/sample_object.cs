@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Stripe.Tests.infrastructure.test_data
 {
-	public class sample_object
+	public class sample_object 
 	{
 		public sample_object()
 		{
@@ -25,6 +25,9 @@ namespace Stripe.Tests.infrastructure.test_data
 				GreaterThan = DateTime.Parse("2000-01-01")
 			};
 		}
+
+		public bool ExpandExpand1 { get; set; }
+		public bool ExpandExpand2 { get; set; }
 
 		public string StringWithoutAttribute { get; set; }
 

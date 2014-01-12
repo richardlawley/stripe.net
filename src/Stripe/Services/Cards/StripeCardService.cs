@@ -21,10 +21,14 @@ namespace Stripe
 			return Mapper<StripeCard>.MapFromJson(response);
 		}
 
-		public virtual StripeCard Get(string customerId, string cardId)
+		public virtual StripeCard Get(string customerId, string cardId, StripeCardGetOptions options = null)
 		{
 			var customerUrl = string.Format(Urls.Cards, customerId);
 			var url = string.Format("{0}/{1}", customerUrl, cardId);
+			if (options != null)
+			{
+				url = ParameterBuilder.ApplyAllParameters(options, url);
+			}
 
 			var response = Requestor.GetString(url, ApiKey);
 

@@ -74,7 +74,9 @@
     <Compile Include="balance\when_retrieving_a_balance.cs" />
     <Compile Include="charges\charge_behaviors.cs" />
     <Compile Include="charges\when_capturing_a_charge_with_a_card.cs" />
+    <Compile Include="charges\when_getting_a_charge_with_expand.cs" />
     <Compile Include="charges\when_listing_charges_by_date.cs" />
+    <Compile Include="charges\when_listing_charges_with_expand.cs" />
     <Compile Include="charges\when_setting_a_charge_to_capture.cs" />
     <Compile Include="charges\when_creating_a_charge_with_an_invalid_card.cs" />
     <Compile Include="charges\when_creating_a_charge_with_a_token.cs" />
@@ -84,7 +86,12 @@
     <Compile Include="coupons\when_creating_a_coupon_with_amount_off.cs" />
     <Compile Include="coupons\when_creating_a_coupon_with_an_api_key.cs" />
     <Compile Include="customers\when_creating_a_customer_with_an_api_key.cs" />
+    <Compile Include="customers\when_getting_a_customer_with_expand.cs" />
+    <Compile Include="customers\when_listing_customers_with_expand.cs" />
+    <Compile Include="infrastructure\test_data\sample_list_object.cs" />
     <Compile Include="infrastructure\test_data\sample_object.cs" />
+    <Compile Include="infrastructure\when_building_listparameters_with_expand.cs" />
+    <Compile Include="infrastructure\when_building_parameters_with_expand.cs" />
     <Compile Include="infrastructure\when_building_parameters.cs" />
     <Compile Include="infrastructure\when_passed_empty_object.cs" />
     <Compile Include="infrastructure\when_serializing_an_equals_datefilter.cs" />

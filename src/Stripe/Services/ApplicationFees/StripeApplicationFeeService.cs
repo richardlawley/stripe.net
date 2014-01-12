@@ -12,9 +12,13 @@ namespace Stripe
 			ApiKey = apiKey;
 		}
 
-		public virtual StripeApplicationFee Get(string applicationFeeId)
+		public virtual StripeApplicationFee Get(string applicationFeeId, StripeApplicationFeeGetOptions options = null)
 		{
 			var url = string.Format("{0}/{1}", Urls.ApplicationFees, applicationFeeId);
+			if (options != null)
+			{
+				url = ParameterBuilder.ApplyAllParameters(options, url);
+			}
 
 			var response = Requestor.GetString(url, ApiKey);
 

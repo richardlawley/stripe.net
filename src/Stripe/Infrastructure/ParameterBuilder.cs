@@ -20,51 +20,66 @@ namespace Stripe
 
 			foreach (var property in obj.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
 			{
-				foreach (var attribute in property.GetCustomAttributes(typeof(JsonPropertyAttribute), false).Cast<JsonPropertyAttribute>())
+				var value = property.GetValue(obj, null);
+				if (value == null) continue;
+
+				if (property.Name.StartsWith("Expand") && value.Equals(true))
 				{
-					var value = property.GetValue(obj, null);
+					// Expand[] properties are used to tell stripe to send an object, rather than an ID.
+					string propertyName = property.Name.Substring("Expand".Length).ToLower();
 
-					if (value == null) continue;
-
-					if (string.Compare(attribute.PropertyName, "metadata", true) == 0)
+					// If the options are List Options, then the property will need to be prefixed
+					if (obj is StripeListOptions)
 					{
-						var metadata = (Dictionary<string, string>)value;
-
-						foreach (string key in metadata.Keys)
-						{
-							newUrl = ApplyParameterToUrl(newUrl, string.Format("metadata[{0}]", key), metadata[key]);
-						}
+						propertyName = "data." + propertyName;
 					}
-					else if (property.PropertyType == typeof(StripeDateFilter))
+
+					newUrl = ApplyParameterToUrl(newUrl, "expand[]", propertyName);
+				}
+				else
+				{
+					foreach (var attribute in property.GetCustomAttributes(typeof(JsonPropertyAttribute), false).Cast<JsonPropertyAttribute>())
 					{
-						StripeDateFilter filter = (StripeDateFilter)value;
-						if (filter.EqualTo.HasValue)
+						if (string.Compare(attribute.PropertyName, "metadata", true) == 0)
 						{
-							newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName, filter.EqualTo.Value.ConvertDateTimeToEpoch().ToString());
+							var metadata = (Dictionary<string, string>)value;
+
+							foreach (string key in metadata.Keys)
+							{
+								newUrl = ApplyParameterToUrl(newUrl, string.Format("metadata[{0}]", key), metadata[key]);
+							}
+						}
+						else if (property.PropertyType == typeof(StripeDateFilter))
+						{
+							StripeDateFilter filter = (StripeDateFilter)value;
+							if (filter.EqualTo.HasValue)
+							{
+								newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName, filter.EqualTo.Value.ConvertDateTimeToEpoch().ToString());
+							}
+							else
+							{
+								if (filter.LessThan.HasValue)
+								{
+									newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName + "[lt]", filter.LessThan.Value.ConvertDateTimeToEpoch().ToString());
+								}
+								if (filter.LessThanOrEqual.HasValue)
+								{
+									newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName + "[lte]", filter.LessThanOrEqual.Value.ConvertDateTimeToEpoch().ToString());
+								}
+								if (filter.GreaterThan.HasValue)
+								{
+									newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName + "[gt]", filter.GreaterThan.Value.ConvertDateTimeToEpoch().ToString());
+								}
+								if (filter.GreaterThanOrEqual.HasValue)
+								{
+									newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName + "[gte]", filter.GreaterThanOrEqual.Value.ConvertDateTimeToEpoch().ToString());
+								}
+							}
 						}
 						else
 						{
-							if (filter.LessThan.HasValue)
-							{
-								newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName + "[lt]", filter.LessThan.Value.ConvertDateTimeToEpoch().ToString());
-							}
-							if (filter.LessThanOrEqual.HasValue)
-							{
-								newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName + "[lte]", filter.LessThanOrEqual.Value.ConvertDateTimeToEpoch().ToString());
-							}
-							if (filter.GreaterThan.HasValue)
-							{
-								newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName + "[gt]", filter.GreaterThan.Value.ConvertDateTimeToEpoch().ToString());
-							}
-							if (filter.GreaterThanOrEqual.HasValue)
-							{
-								newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName + "[gte]", filter.GreaterThanOrEqual.Value.ConvertDateTimeToEpoch().ToString());
-							}
+							newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName, value.ToString());
 						}
-					}
-					else
-					{
-						newUrl = ApplyParameterToUrl(newUrl, attribute.PropertyName, value.ToString());
 					}
 				}
 			}

@@ -50,5 +50,7 @@ namespace Stripe.Tests.infrastructure
 		It should_contain_metadata_as_inline_items = () =>
 			_result.ShouldContain("metadata[A]=Value-A");
 
+		It should_not_contain_expanditems = () =>
+			_result.ShouldNotContain("expand[]=");
 	}
 }
