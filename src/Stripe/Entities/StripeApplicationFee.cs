@@ -41,7 +41,7 @@ namespace Stripe
 		public string ApplicationId { get; set; }
 
 		[JsonProperty("balance_transaction")]
-		public string BalanceTransaction { get; set; }
+		public string BalanceTransactionId { get; set; }
 
 		public string ChargeId { get; private set; }
 		public StripeCharge Charge { get; private set; }

@@ -65,6 +65,8 @@
     <Compile Include="account\account_behaviors.cs" />
     <Compile Include="account\when_retrieving_an_account.cs" />
     <Compile Include="balance\balance_behaviors.cs" />
+    <Compile Include="balance\when_listing_balancetransactions.cs" />
+    <Compile Include="balance\when_listing_balancetransactions_forcharge.cs" />
     <Compile Include="balance\when_retrieving_a_balance.cs" />
     <Compile Include="charges\charge_behaviors.cs" />
     <Compile Include="charges\when_capturing_a_charge_with_a_card.cs" />
@@ -77,7 +79,6 @@
     <Compile Include="coupons\when_creating_a_coupon_with_amount_off.cs" />
     <Compile Include="coupons\when_creating_a_coupon_with_an_api_key.cs" />
     <Compile Include="customers\when_creating_a_customer_with_an_api_key.cs" />
-    <Compile Include="infrastructure\when_deserializing_expandable_objects.cs" />
     <Compile Include="invoiceitems\when_creating_an_invoiceitem_with_an_api_key.cs" />
     <Compile Include="invoices\when_closing_an_invoice.cs" />
     <Compile Include="invoices\when_creating_an_invoice_with_an_api_key.cs" />
