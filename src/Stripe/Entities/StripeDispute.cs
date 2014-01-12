@@ -13,9 +13,25 @@ namespace Stripe
 		[JsonProperty("amount")]
 		public int? AmountInCents { get; set; }
 
+		public string BalanceTransactionId { get; private set; }
+		public StripeBalanceTransaction BalanceTransaction { get; private set; }
 		[JsonProperty("balance_transaction")]
-		public string BalanceTransactionId { get; set; }
-		public string ChargeId { get; private set; }
+		private object BalanceTransactionJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					BalanceTransaction = ((JToken)value).ToObject<StripeBalanceTransaction>();
+					BalanceTransactionId = BalanceTransaction.Id;
+				}
+				else if (value is string)
+				{
+					BalanceTransaction = null;
+					BalanceTransactionId = (string)value;
+				}
+			}
+		}		public string ChargeId { get; private set; }
 		public StripeCharge Charge { get; private set; }
 		[JsonProperty("charge")]
 		private object ChargeJson

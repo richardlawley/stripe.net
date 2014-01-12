@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Stripe.Infrastructure;
 
 namespace Stripe
@@ -16,8 +17,25 @@ namespace Stripe
 		[JsonProperty("amount_refunded")]
 		public int? AmountInCentsRefunded { get; set; }
 
+		public string BalanceTransactionId { get; private set; }
+		public StripeBalanceTransaction BalanceTransaction { get; private set; }
 		[JsonProperty("balance_transaction")]
-		public string BalanceTransactionId { get; set; }
+		private object BalanceTransactionJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					BalanceTransaction = ((JToken)value).ToObject<StripeBalanceTransaction>();
+					BalanceTransactionId = BalanceTransaction.Id;
+				}
+				else if (value is string)
+				{
+					BalanceTransaction = null;
+					BalanceTransactionId = (string)value;
+				}
+			}
+		}
 
 		[JsonProperty("created")]
 		[JsonConverter(typeof(StripeDateTimeConverter))]
@@ -26,6 +44,8 @@ namespace Stripe
 		[JsonProperty("currency")]
 		public string Currency { get; set; }
 
+		public string CustomerId { get; private set; }
+		public StripeCustomer Customer { get; private set; }
 		[JsonProperty("customer")]
 		private object CustomerJson
 		{

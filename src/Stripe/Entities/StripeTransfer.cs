@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Stripe.Infrastructure;
 
 namespace Stripe
@@ -56,9 +57,25 @@ namespace Stripe
 		[JsonProperty("account[verified]")]
 		public bool? AccountVerified { get; set; }
 
+		public string BalanceTransactionId { get; private set; }
+		public StripeBalanceTransaction BalanceTransaction { get; private set; }
 		[JsonProperty("balance_transaction")]
-		public string BalanceTransactionId { get; set; }
-
+		private object BalanceTransactionJson
+		{
+			set
+			{
+				if (value is JObject)
+				{
+					BalanceTransaction = ((JToken)value).ToObject<StripeBalanceTransaction>();
+					BalanceTransactionId = BalanceTransaction.Id;
+				}
+				else if (value is string)
+				{
+					BalanceTransaction = null;
+					BalanceTransactionId = (string)value;
+				}
+			}
+		}
 		[JsonProperty("description")]
 		public string Description { get; set; }
 
