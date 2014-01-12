@@ -57,6 +57,7 @@
     <Compile Include="Entities\StripeBalance.cs" />
     <Compile Include="Entities\StripeBalanceTransaction.cs" />
     <Compile Include="Entities\StripeCardList.cs" />
+    <Compile Include="Entities\StripeDateFilter.cs" />
     <Compile Include="Entities\StripeDispute.cs" />
     <Compile Include="Entities\StripeAccount.cs" />
     <Compile Include="Entities\StripeEventData.cs" />
@@ -77,11 +78,13 @@
     <Compile Include="Entities\StripeCoupon.cs" />
     <Compile Include="Entities\StripeDiscount.cs" />
     <Compile Include="Entities\StripeTransfer.cs" />
+    <Compile Include="Infrastructure\EpochTime.cs" />
     <Compile Include="Infrastructure\StripeConfiguration.cs" />
     <Compile Include="Infrastructure\StripeDateTimeConverter.cs" />
     <Compile Include="Infrastructure\Mapper.cs" />
     <Compile Include="Entities\StripeCustomer.cs" />
     <Compile Include="Services\Account\StripeAccountService.cs" />
+    <Compile Include="Services\ApplicationFees\StripeApplicationFeeListOptions.cs" />
     <Compile Include="Services\Balance\StripeBalanceService.cs" />
     <Compile Include="Services\Balance\StripeBalanceTransactionListOptions.cs" />
     <Compile Include="Services\BankAccountOptions.cs" />
@@ -91,6 +94,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\Cards\StripeCardUpdateOptions.cs" />
+    <Compile Include="Services\Charges\StripeChargeListOptions.cs" />
+    <Compile Include="Services\Customers\StripeCustomerListOptions.cs" />
     <Compile Include="Services\Disputes\StripeDisputeService.cs" />
     <Compile Include="Services\Events\StripeEventSearchOptions.cs" />
     <Compile Include="Services\Events\StripeEventService.cs" />
@@ -98,6 +103,7 @@
     <Compile Include="Services\InvoiceItems\StripeInvoiceItemUpdateOptions.cs" />
     <Compile Include="Services\InvoiceItems\StripeInvoiceItemCreateOptions.cs" />
     <Compile Include="Services\InvoiceItems\StripeInvoiceItemService.cs" />
+    <Compile Include="Services\Invoices\StripeInvoiceListOptions.cs" />
     <Compile Include="Services\Invoices\StripeInvoiceService.cs" />
     <Compile Include="Services\CreditCardOptions.cs" />
     <Compile Include="Services\Charges\StripeChargeCreateOptions.cs" />
@@ -109,6 +115,7 @@
     <Compile Include="Services\Customers\StripeCustomerCreateOptions.cs" />
     <Compile Include="Services\Customers\StripeCustomerService.cs" />
     <Compile Include="Services\Invoices\StripeInvoiceUpdateOptions.cs" />
+    <Compile Include="Services\StripeListOptions.cs" />
     <Compile Include="Services\OAuth\StripeOAuthTokenCreateOptions.cs" />
     <Compile Include="Services\OAuth\StripeOAuthTokenService.cs" />
     <Compile Include="Services\Plans\StripePlanCreateOptions.cs" />
@@ -117,7 +124,6 @@
     <Compile Include="Services\Recipients\StripeRecipientCreateOptions.cs" />
     <Compile Include="Services\Recipients\StripeRecipientService.cs" />
     <Compile Include="Services\Recipients\StripeRecipientUpdateOptions.cs" />
-    <Compile Include="Services\StripeListOptions.cs" />
     <Compile Include="Services\Tokens\StripeTokenCreateOptions.cs" />
     <Compile Include="Services\Tokens\StripeTokenService.cs" />
     <Compile Include="Infrastructure\StripeException.cs" />
@@ -125,6 +131,7 @@
     <Compile Include="Infrastructure\ParameterBuilder.cs" />
     <Compile Include="Infrastructure\Requestor.cs" />
     <Compile Include="Services\Transfers\StripeTransferCreateOptions.cs" />
+    <Compile Include="Services\Transfers\StripeTransferListOptions.cs" />
     <Compile Include="Services\Transfers\StripeTransferService.cs" />
   </ItemGroup>
   <ItemGroup>
