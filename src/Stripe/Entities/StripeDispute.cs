@@ -10,10 +10,7 @@ namespace Stripe
 		public bool? LiveMode { get; set; }
 
 		[JsonProperty("amount")]
-		public int? AmountInCents { get; set; }
-
-		[JsonProperty("balance_transaction")]
-		public string BalanceTransactionId { get; set; }
+		public int? Amount { get; set; }
 
 		[JsonProperty("charge")]
 		public string ChargeId { get; set; }

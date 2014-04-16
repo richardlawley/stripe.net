@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Stripe
 {
@@ -21,16 +20,29 @@ namespace Stripe
 			return Mapper<StripeApplicationFee>.MapFromJson(response);
 		}
 
-		public virtual StripeApplicationFee Refund(string applicationFeeId, int? refundAmountInCents = null)
+		public virtual StripeApplicationFee Refund(string applicationFeeId, int? refundAmount = null)
 		{
 			var url = string.Format("{0}/{1}/refund", Urls.ApplicationFees, applicationFeeId);
 
-			if (refundAmountInCents.HasValue)
-				url = ParameterBuilder.ApplyParameterToUrl(url, "amount", refundAmountInCents.Value.ToString());
+			if (refundAmount.HasValue)
+				url = ParameterBuilder.ApplyParameterToUrl(url, "amount", refundAmount.Value.ToString());
 
 			var response = Requestor.PostString(url, ApiKey);
 
 			return Mapper<StripeApplicationFee>.MapFromJson(response);
+		}
+
+		public virtual IEnumerable<StripeApplicationFee> List(int limit = 10, string chargeId = null)
+		{
+			var url = Urls.ApplicationFees;
+			url = ParameterBuilder.ApplyParameterToUrl(url, "limit", limit.ToString());
+
+			if (!string.IsNullOrEmpty(chargeId))
+				url = ParameterBuilder.ApplyParameterToUrl(url, "charge", chargeId);
+
+			var response = Requestor.GetString(url, ApiKey);
+
+			return Mapper<StripeApplicationFee>.MapCollectionFromJson(response);
 		}
 	}
 }

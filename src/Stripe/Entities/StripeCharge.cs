@@ -11,13 +11,10 @@ namespace Stripe
 		public string Id { get; set; }
 
 		[JsonProperty("amount")]
-		public int? AmountInCents { get; set; }
+		public int? Amount { get; set; }
 
 		[JsonProperty("amount_refunded")]
-		public int? AmountInCentsRefunded { get; set; }
-
-		[JsonProperty("balance_transaction")]
-		public string BalanceTransactionId { get; set; }
+		public int? AmountRefunded { get; set; }
 
 		[JsonProperty("created")]
 		[JsonConverter(typeof(StripeDateTimeConverter))]
@@ -27,7 +24,7 @@ namespace Stripe
 		public string Currency { get; set; }
 
 		[JsonProperty("customer")]
-		public string CustomerId { get; private set; }
+		public string CustomerId { get; set; }
 
 		[JsonProperty("description")]
 		public string Description { get; set; }
