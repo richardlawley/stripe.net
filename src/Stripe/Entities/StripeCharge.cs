@@ -5,11 +5,8 @@ using Stripe.Infrastructure;
 
 namespace Stripe
 {
-	public class StripeCharge
+	public class StripeCharge : StripeObject
 	{
-		[JsonProperty("id")]
-		public string Id { get; set; }
-
 		[JsonProperty("amount")]
 		public int? Amount { get; set; }
 
@@ -24,7 +21,15 @@ namespace Stripe
 		public string Currency { get; set; }
 
 		[JsonProperty("customer")]
-		public string CustomerId { get; set; }
+		private object CustomerJson
+		{
+			set
+			{
+				ExpandableProperty<StripeCustomer>.Map(value, id => CustomerId = id, obj => Customer = obj);
+			}
+		}
+		public StripeCustomer Customer { get; private set; }
+		public string CustomerId { get; private set; }
 
 		[JsonProperty("description")]
 		public string Description { get; set; }
