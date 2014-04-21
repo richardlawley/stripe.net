@@ -47,7 +47,15 @@ namespace Stripe
 		public StripeCard StripeCard { get; set; }
 
 		[JsonProperty("invoice")]
-		public string InvoiceId { get; set; }
+		private object InvoiceJson
+		{
+			set
+			{
+				ExpandableProperty<StripeInvoice>.Map(value, id => InvoiceId = id, obj => Invoice = obj);
+			}
+		}
+		public string InvoiceId { get; private set; }
+		public StripeInvoice Invoice {get;private set;}
 
 		[JsonProperty("failure_message")]
 		public string FailureMessage { get; private set; }

@@ -4,11 +4,8 @@ using Stripe.Infrastructure;
 
 namespace Stripe
 {
-	public class StripeInvoice
+	public class StripeInvoice : StripeObject
 	{
-		[JsonProperty("id")]
-		public string Id { get; set; }
-
 		[JsonProperty("amount_due")]
 		public int? AmountDue { get; set; }
 
